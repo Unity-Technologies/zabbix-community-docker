@@ -4,7 +4,7 @@ FROM centos:centos7
 MAINTAINER Jan Garaj info@monitoringartist.com
 
 ENV \
-  DB_max_allowed_packet=16M \	
+  DB_max_allowed_packet=64M \	
   DB_query_cache_size=0 \
   DB_query_cache_type=0 \
   DB_sync_binlog=0 \	
