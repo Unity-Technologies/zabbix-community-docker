@@ -1,5 +1,3 @@
-# docker build --rm=true -t jangaraj/zabbix-server-2.4 .
-
 FROM centos:centos7
 MAINTAINER Jan Garaj info@monitoringartist.com
 

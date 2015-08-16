@@ -1,5 +1,3 @@
-# docker build --rm=true -t jangaraj/zabbix-db-mariadb .
-
 FROM centos:centos7
 MAINTAINER Jan Garaj info@monitoringartist.com
 
