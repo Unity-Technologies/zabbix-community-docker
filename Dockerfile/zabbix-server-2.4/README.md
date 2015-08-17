@@ -14,14 +14,18 @@ IPv6, Jabber) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP. Image
  requires external MySQL/MariaDB database (you can run MySQL/MariaDB also as 
  Docker container).
 
-#### Quick overview 
+#### Standard Dockerized Zabbix server usage 
 
 ```
+# create /var/lib/mysql as persistent volume storage 
+docker run -d -v /var/lib/mysql --name zabbix-db-storage busybox:latest`
+
 # start DB for zabbix server - default 1GB innodb_buffer_pool_size is used
 docker run \
     -d \
     --name zabbix-db \
     -p 3306:3306 \
+    --volumes-from zabbix-db-storage \
     --env="MARIADB_USER=zabbix" \
     --env="MARIADB_PASS=my_password" \
     zabbix/zabbix-db-mariadb
