@@ -18,7 +18,7 @@ IPv6, Jabber) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP. Image
 
 ```
 # create /var/lib/mysql as persistent volume storage 
-docker run -d -v /var/lib/mysql --name zabbix-db-storage busybox:latest`
+docker run -d -v /var/lib/mysql --name zabbix-db-storage busybox:latest
 
 # start DB for zabbix server - default 1GB innodb_buffer_pool_size is used
 docker run \
