@@ -2,7 +2,7 @@ FROM centos:centos7
 MAINTAINER Jan Garaj info@monitoringartist.com
 
 ENV \
-  ZABBIX_VERSION=2.4.6 \
+  ZABBIX_VERSION=trunk \      # trunk tags/2.4.6 branches/dev/ZBXNEXT-1263-1 
   STATUS_PAGE_ALLOWED_IP=127.0.0.1 \
   JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
   JAVA=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
@@ -115,10 +115,10 @@ RUN \
  `# reinstall glibc for locales` \
   yum -y -q reinstall glibc-common && \
   cp /usr/local/etc/zabbix_agend.conf /tmp && \
-  svn co svn://svn.zabbix.com/tags/${ZABBIX_VERSION} /usr/local/src/zabbix && \
+  svn co svn://svn.zabbix.com/${ZABBIX_VERSION} /usr/local/src/zabbix && \
   cd /usr/local/src/zabbix && \
   ./bootstrap.sh && \
-  ./configure --enable-server --enable-agent --with-mysql --enable-java --with-net-snmp --with-libcurl --with-libxml2 --with-openipmi --enable-ipv6 --with-jabber && \
+  ./configure --enable-server --enable-agent --with-mysql --enable-java --with-net-snmp --with-libcurl --with-libxml2 --with-openipmi --enable-ipv6 --with-jabber --with-ldap --with-openssl && \
   make dbschema && \
   make install && \
   cp /usr/local/etc/web/zabbix.conf.php /usr/local/src/zabbix/frontends/php/conf/ && \
