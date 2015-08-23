@@ -84,6 +84,7 @@ RUN \
   yum clean all && \
   yum update -y && \
   yum install -y epel-release && \
+  sed -i -e "\|^https://\"http://|d" /etc/yum.repos.d/epel.repo && \
   yum clean all && \  
   yum install -y supervisor && \
   yum install -y http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm && \
@@ -124,8 +125,10 @@ RUN \
   svn co svn://svn.zabbix.com/${ZABBIX_VERSION} /usr/local/src/zabbix && \
   cd /usr/local/src/zabbix && \
   ./bootstrap.sh && \
-  ./configure --enable-server --enable-agent --with-mysql --enable-java --with-net-snmp --with-libcurl --with-libxml2 \
-              --with-openipmi --enable-ipv6 --with-jabber --with-openssl --with-ssh2 --with-ldap  --with-unixodbc && \
+  ./configure --enable-server --enable-agent --with-mysql --enable-java \
+              --with-net-snmp --with-libcurl --with-libxml2 --with-openipmi \
+              --enable-ipv6 --with-jabber --with-openssl --with-ssh2 \
+              --with-ldap  --with-unixodbc && \
   make dbschema && \
   make install && \
   cp /usr/local/etc/web/zabbix.conf.php /usr/local/src/zabbix/frontends/php/conf/ && \
@@ -145,8 +148,9 @@ RUN \
   rm -rf 3.10.tar.gz && \ 
   cd /usr/local/src/zabbix/frontends/php && \
   locale/make_mo.sh && \
-  yum autoremove -y gettext python-pip tar svn gcc automake mariadb-devel java-1.8.0-openjdk-devel libxml2-devel \
-                 libcurl-devel OpenIPMI-devel iksemel-devel && \
+  yum autoremove -y gettext python-pip tar svn gcc automake mariadb-devel \
+                    java-1.8.0-openjdk-devel libxml2-devel libcurl-devel \
+                    OpenIPMI-devel iksemel-devel && \
   yum install -y OpenIPMI-libs && \
   chmod +x /config/bootstrap.sh && \ 
   chmod +x /config/ds.sh && \
