@@ -1,10 +1,11 @@
-FROM centos:centos7
+t add Dockerfile
+git commit -m 'FROM centos:centos7
 MAINTAINER Jan Garaj info@monitoringartist.com
 
 # ZABBIX_VERSION= trunk tags/2.4.6 branches/dev/ZBXNEXT-1263-1
 
 ENV \
-  ZABBIX_VERSION=trunk \
+  ZABBIX_VERSION=branches/dev/ZBXNEXT-1263-1 \
   STATUS_PAGE_ALLOWED_IP=127.0.0.1 \
   JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
   JAVA=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
