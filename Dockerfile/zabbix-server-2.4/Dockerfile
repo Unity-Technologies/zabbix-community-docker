@@ -84,6 +84,7 @@ RUN \
   yum clean all && \
   yum update -y && \
   yum install -y epel-release && \
+  yum clean all && \  
   yum install -y supervisor && \
   yum install -y http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm && \
   yum install -y nginx inotify-tools && \
