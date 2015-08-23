@@ -108,19 +108,21 @@ ADD container-files-base /
 # Layer: zabbix
 COPY container-files-zabbix /
 RUN \
-  yum install -y --disablerepo=epel tar svn gcc automake make nmap traceroute iptstate wget \
+  yum clean all && \
+  yum install -y tar svn gcc automake make nmap traceroute iptstate wget \
               net-snmp-devel net-snmp-libs net-snmp net-snmp-perl iksemel \
               net-snmp-python net-snmp-utils java-1.8.0-openjdk python-pip \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel gettext \
-              libcurl-devel OpenIPMI-devel mysql iksemel-devel net-tools \
-              snmptt sudo && \
+              libcurl-devel OpenIPMI-devel mysql iksemel-devel libssh2-devel \
+              unixODBC unixODBC-devel mysql-connector-odbc postgresql-odbc \ 
+              openldap-devel net-tools snmptt sudo && \
  `# reinstall glibc for locales` \
   yum -y -q reinstall glibc-common && \
   cp /usr/local/etc/zabbix_agend.conf /tmp && \
   svn co svn://svn.zabbix.com/${ZABBIX_VERSION} /usr/local/src/zabbix && \
   cd /usr/local/src/zabbix && \
   ./bootstrap.sh && \
-  ./configure --enable-server --enable-agent --with-mysql --enable-java --with-net-snmp --with-libcurl --with-libxml2 --with-openipmi --enable-ipv6 --with-jabber --with-openssl && \
+  ./configure --enable-server --enable-agent --with-mysql --enable-java --with-net-snmp --with-libcurl --with-libxml2 --with-openipmi --enable-ipv6 --with-jabber --with-openssl --with-ssh2 --with-ldap  --with-unixodbc && \
   make dbschema && \
   make install && \
   cp /usr/local/etc/web/zabbix.conf.php /usr/local/src/zabbix/frontends/php/conf/ && \
