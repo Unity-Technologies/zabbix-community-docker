@@ -106,7 +106,7 @@ ADD container-files-base /
 # Layer: zabbix
 COPY container-files-zabbix /
 RUN \
-  yum install -y tar svn gcc automake make nmap traceroute iptstate wget \
+  yum install -y --disablerepo=epel tar svn gcc automake make nmap traceroute iptstate wget \
               net-snmp-devel net-snmp-libs net-snmp net-snmp-perl iksemel \
               net-snmp-python net-snmp-utils java-1.8.0-openjdk python-pip \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel gettext \
