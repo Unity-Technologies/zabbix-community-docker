@@ -1,5 +1,3 @@
-t add Dockerfile
-git commit -m 'FROM centos:centos7
 MAINTAINER Jan Garaj info@monitoringartist.com
 
 # ZABBIX_VERSION= trunk tags/2.4.6 branches/dev/ZBXNEXT-1263-1
