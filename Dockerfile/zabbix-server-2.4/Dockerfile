@@ -4,7 +4,7 @@ MAINTAINER Jan Garaj info@monitoringartist.com
 # ZABBIX_VERSION= trunk tags/2.4.6 branches/dev/ZBXNEXT-1263-1
 
 ENV \
-  ZABBIX_VERSION=tags/2.4.6 \
+  ZABBIX_VERSION=trunk \
   STATUS_PAGE_ALLOWED_IP=127.0.0.1 \
   JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
   JAVA=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
@@ -110,6 +110,7 @@ ADD container-files-base /
 COPY container-files-zabbix /
 RUN \
   yum clean all && \
+  yum update -y && \
   yum install -y tar svn gcc automake make nmap traceroute iptstate wget \
               net-snmp-devel net-snmp-libs net-snmp net-snmp-perl iksemel \
               net-snmp-python net-snmp-utils java-1.8.0-openjdk python-pip \
@@ -123,7 +124,8 @@ RUN \
   svn co svn://svn.zabbix.com/${ZABBIX_VERSION} /usr/local/src/zabbix && \
   cd /usr/local/src/zabbix && \
   ./bootstrap.sh && \
-  ./configure --enable-server --enable-agent --with-mysql --enable-java --with-net-snmp --with-libcurl --with-libxml2 --with-openipmi --enable-ipv6 --with-jabber --with-openssl --with-ssh2 --with-ldap  --with-unixodbc && \
+  ./configure --enable-server --enable-agent --with-mysql --enable-java --with-net-snmp --with-libcurl --with-libxml2 \
+              --with-openipmi --enable-ipv6 --with-jabber --with-openssl --with-ssh2 --with-ldap  --with-unixodbc && \
   make dbschema && \
   make install && \
   cp /usr/local/etc/web/zabbix.conf.php /usr/local/src/zabbix/frontends/php/conf/ && \
@@ -143,7 +145,8 @@ RUN \
   rm -rf 3.10.tar.gz && \ 
   cd /usr/local/src/zabbix/frontends/php && \
   locale/make_mo.sh && \
-  yum autoremove -y gettext python-pip tar svn gcc automake mariadb-devel java-1.8.0-openjdk-devel libxml2-devel libcurl-devel OpenIPMI-devel iksemel-devel && \
+  yum autoremove -y gettext python-pip tar svn gcc automake mariadb-devel java-1.8.0-openjdk-devel libxml2-devel \
+                 libcurl-devel OpenIPMI-devel iksemel-devel && \
   yum install -y OpenIPMI-libs && \
   chmod +x /config/bootstrap.sh && \ 
   chmod +x /config/ds.sh && \
