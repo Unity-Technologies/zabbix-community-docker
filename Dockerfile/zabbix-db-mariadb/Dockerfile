@@ -21,7 +21,7 @@ RUN \
     yum install -y MariaDB-server hostname net-tools pwgen git && \
     git clone https://github.com/maxhq/zabbix-backup && \
     mv /zabbix-backup/zabbix-mysql-dump /zabbix-backup/zabbix-mariadb-dump && \
-    yum autoremove git && \
+    yum autoremove -y git && \
     yum clean all && \
     cp -f -r /tmp/etc/* /etc/ && \
     cp -f /tmp/*.sh / && \
