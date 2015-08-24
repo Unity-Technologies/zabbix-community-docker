@@ -14,15 +14,27 @@ innodb_buffer_pool_size by using environment variable *DB_innodb_buffer_pool_siz
 ## Usage
 
 Run the image as daemon and bind it to port 3306:
-  
-	docker run \
-		-d \
-		--name zabbix-db \
-		-p 3306:3306 \
-		--env="MARIADB_USER=zabbix" \
-		--env="MARIADB_PASS=my_password" \
-        --env="DB_innodb_buffer_pool_size=768M" \
-		zabbix/zabbix-db-mariadb
+
+```  
+docker run \
+	-d \
+	--name zabbix-db \
+	-p 3306:3306 \
+	--env="MARIADB_USER=zabbix" \
+	--env="MARIADB_PASS=my_password" \
+       --env="DB_innodb_buffer_pool_size=768M" \
+	zabbix/zabbix-db-mariadb
+```    
+        
+## Backup
+
+Backup configuration data of running DB (https://github.com/maxhq/zabbix-backup):
+
+```
+docker exec \ 
+    -ti zabbix-db \
+    /zabbix-backup/zabbix-mariadb-dump -u zabbix -p my_password -o /tmp    
+```        
         
 ## Environmental variables
 In this Image you can use environmental variables to config MariaDB. Available 
