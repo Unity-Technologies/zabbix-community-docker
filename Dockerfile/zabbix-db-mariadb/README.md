@@ -1,4 +1,4 @@
-# Zabbix DB - MariaDB 10.0 Docker Image (Centos7)
+# Zabbix DB - MariaDB 10.0
 [![Circle CI](https://circleci.com/gh/million12/docker-mariadb.svg?style=svg)](https://circleci.com/gh/million12/docker-mariadb)
 
 This is a MariaDB 10.0 Docker [zabbix/zabbix-db-mariadb](https://hub.docker.com/r/zabbix/zabbix-db-mariadb/) 
