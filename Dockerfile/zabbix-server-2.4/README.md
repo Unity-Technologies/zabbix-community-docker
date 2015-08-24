@@ -25,6 +25,7 @@ docker run \
     -d \
     --name zabbix-db \
     -p 3306:3306 \
+    -v /backups:/backups \
     --volumes-from zabbix-db-storage \
     --env="MARIADB_USER=zabbix" \
     --env="MARIADB_PASS=my_password" \
@@ -46,6 +47,16 @@ docker run \
     zabbix/zabbix-server-2.4    
 # wait 60 seconds for Zabbix server initialization
 # Zabbix web will be available on the port 80, Zabbix server on the port 10051
+
+# Backup Zabbix configuration
+docker exec \
+    -ti zabbix-db \
+    /zabbix-backup/zabbix-mariadb-dump -u zabbix -p my_password -o /backups
+# Full backup Zabbix configuration
+docker exec \
+    -ti zabbix-db \
+    mysqldump -u zabbix -p my_password zabbix | \
+    bzip2 -c > /backups/zabbix_db_dump_$(date +%Y-%m-%d-%H.%M.%S).sql.bz2 
 ```
 
 ### Zabbix database as Docker container
