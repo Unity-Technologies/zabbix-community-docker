@@ -33,7 +33,7 @@ Backup configuration data of running DB (https://github.com/maxhq/zabbix-backup)
 ```
 docker exec \
     -ti zabbix-db \
-    /zabbix-backup/zabbix-mariadb-dump -u zabbix -p my_password -o /tmp    
+    /zabbix-backup/zabbix-mariadb-dump -u zabbix -p my_password -o /tmp
 ```        
         
 ## Environmental variables
