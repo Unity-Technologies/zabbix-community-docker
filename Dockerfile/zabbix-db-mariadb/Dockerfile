@@ -18,7 +18,7 @@ RUN \
     yum update -y && \
     cp /tmp/etc/yum.repos.d/* /etc/yum.repos.d/ && \
     yum install -y epel-release && \
-    yum install -y MariaDB-server hostname net-tools pwgen git && \
+    yum install -y MariaDB-server hostname net-tools pwgen git bind-utils && \
     git clone https://github.com/maxhq/zabbix-backup && \
     mv /zabbix-backup/zabbix-mysql-dump /zabbix-backup/zabbix-mariadb-dump && \
     yum autoremove -y git && \
