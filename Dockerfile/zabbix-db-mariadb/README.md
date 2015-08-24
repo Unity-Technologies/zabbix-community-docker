@@ -22,7 +22,7 @@ docker run \
 	-p 3306:3306 \
 	--env="MARIADB_USER=zabbix" \
 	--env="MARIADB_PASS=my_password" \
-       --env="DB_innodb_buffer_pool_size=768M" \
+	--env="DB_innodb_buffer_pool_size=768M" \
 	zabbix/zabbix-db-mariadb
 ```    
         
