@@ -48,11 +48,11 @@ docker run \
 # wait 60 seconds for Zabbix server initialization
 # Zabbix web will be available on the port 80, Zabbix server on the port 10051
 
-# Backup Zabbix configuration
+# COnfiguration backup of Zabbix
 docker exec \
     -ti zabbix-db \
     /zabbix-backup/zabbix-mariadb-dump -u zabbix -p my_password -o /backups
-# Full backup Zabbix configuration
+# Full backup of Zabbix
 docker exec \
     -ti zabbix-db \
     mysqldump -u zabbix -p my_password zabbix | \
