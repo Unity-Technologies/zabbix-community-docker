@@ -162,4 +162,6 @@ RUN \
 
 CMD ["/config/bootstrap.sh"]
 
+VOLUME ["/etc/custom-config/"]
+
 EXPOSE 10051 10052 80
