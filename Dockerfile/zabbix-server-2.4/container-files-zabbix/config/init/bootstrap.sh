@@ -144,6 +144,25 @@ update_config() {
 ####################### End of default settings #######################
 # Zabbix default sql files 
 ZABBIX_SQL_DIR="/usr/local/src/zabbix/database/mysql"
+# load DB config from custom config file if exist
+if [ -f /etc/custom-config/zabbix_server.conf ]; then
+  FZS_DBPassword=$(grep ^DBPassword= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+  if [ ! -z "$VAR" ]; then
+    export ZS_DBPassword=$FZS_DBPassword
+  fi
+  FZS_DBUser=$(grep ^DBUser= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+  if [ ! -z "$FZS_DBUser" ]; then
+    export ZS_DBUser=$FZS_DBUser
+  fi
+  FZS_DBHost=$(grep ^DBHost= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+  if [ ! -z "$FZS_DBHost" ]; then
+    export ZS_DBHost=$FZS_DBHost
+  fi
+  FZS_DBPort=$(grep ^DBPort= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+  if [ ! -z "$FZS_DBPort" ]; then
+    export ZS_DBPort=$FZS_DBPort
+  fi
+fi
 log "Preparing server configuration"
 update_config
 log "Config updated."
