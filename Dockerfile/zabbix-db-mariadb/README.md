@@ -34,7 +34,16 @@ Backup configuration data of running DB (https://github.com/maxhq/zabbix-backup)
 docker exec \
     -ti zabbix-db \
     /zabbix-backup/zabbix-mariadb-dump -u zabbix -p my_password -o /tmp
-```        
+```  
+
+Full backup:
+
+```
+docker exec \
+    zabbix-db \
+    /usr/bin/mysqldump -u zabbix -p my_password zabbix | gzip -v \
+    > /tmp/zabbix-db-dump.gz
+```
         
 ## Environmental variables
 In this Image you can use environmental variables to config MariaDB. Available 
