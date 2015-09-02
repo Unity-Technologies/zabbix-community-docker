@@ -162,6 +162,6 @@ RUN \
 
 CMD ["/config/bootstrap.sh"]
 
-VOLUME ["/etc/custom-config/"]
+VOLUME ["/etc/custom-config/", "/usr/local/share/zabbix/externalscripts", "/usr/local/share/zabbix/ssl/certs", "/usr/local/share/zabbix/ssl/keys", "/usr/lib/zabbix/modules"]
 
 EXPOSE 10051 10052 80
