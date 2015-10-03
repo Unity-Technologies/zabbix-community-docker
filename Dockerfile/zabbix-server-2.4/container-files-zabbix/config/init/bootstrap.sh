@@ -179,7 +179,7 @@ log "Checking if database exists or fresh install is required"
 
 # wait 120sec for DB
 retry=24
-until mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -e "use ${ZS_DBName};" &>/dev/null
+until mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -e "exit;" &>/dev/null
 do
   log "Waiting for database, it's still not available"
   retry=`expr $retry - 1`
@@ -189,7 +189,7 @@ do
   sleep 5
 done
 
-if ! mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -e "use ${ZS_DBName};"; then
+if ! mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -e "use ${ZS_DBName};" &>/dev/null; then
   warning "Zabbix DB doesn't exists. Installing and importing default settings"
   log `create_db`
   log "Database and user created. Importing Default SQL"
