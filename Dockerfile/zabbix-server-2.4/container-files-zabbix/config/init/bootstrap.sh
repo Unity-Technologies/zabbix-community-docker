@@ -184,19 +184,20 @@ do
   log "Waiting for database, it's still not available"
   retry=`expr $retry - 1`
   if [ $retry -eq 0 ]; then
+    error "Database is not available!"
     exit 1
   fi
   sleep 5
 done
 
 if ! mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -e "use ${ZS_DBName};" &>/dev/null; then
-  warning "Zabbix DB doesn't exists. Installing and importing default settings"
+  warning "Zabbix database doesn't exists. Installing and importing default settings"
   log `create_db`
-  log "Database and user created. Importing Default SQL"
+  log "Database and user created, importing default SQL"
   log `import_zabbix_db`
-  log "Import Finished. Starting"
+  log "Import finished, starting"
 else
-  log "Zabbix DB Exists. Starting server."
+  log "Zabbix database exists, starting server"
 fi
 # TODO wait for zabbix-server start with API actions
 #python /config/pyzabbix.py 2>/dev/null
