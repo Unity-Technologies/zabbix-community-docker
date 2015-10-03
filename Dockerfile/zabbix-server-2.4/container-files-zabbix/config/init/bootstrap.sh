@@ -175,7 +175,6 @@ logging
 system_pids
 fix_permissions
 log "Done"
-log "Checking if database exists or fresh install is required"
 
 # wait 120sec for DB
 retry=24
@@ -190,6 +189,7 @@ do
   sleep 5
 done
 
+log "Checking if database exists or fresh install is required"
 if ! mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -e "use ${ZS_DBName};" &>/dev/null; then
   warning "Zabbix database doesn't exists. Installing and importing default settings"
   log `create_db`
