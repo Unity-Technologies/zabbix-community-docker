@@ -142,7 +142,7 @@ update_config() {
 
 }
 ####################### End of default settings #######################
-# Zabbix default sql files 
+# Zabbix default sql files
 ZABBIX_SQL_DIR="/usr/local/src/zabbix/database/mysql"
 # load DB config from custom config file if exist
 if [ -f /etc/custom-config/zabbix_server.conf ]; then
@@ -162,26 +162,42 @@ if [ -f /etc/custom-config/zabbix_server.conf ]; then
   if [ ! -z "$FZS_DBPort" ]; then
     export ZS_DBPort=$FZS_DBPort
   fi
+  FZS_DBName=$(grep ^ZS_DBName= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+  if [ ! -z "$FZS_DBName" ]; then
+    export ZS_DBName=$FZS_DBName
+  fi
 fi
 log "Preparing server configuration"
 update_config
 log "Config updated."
-log "Enabling Logging and pid management."
+log "Enabling logging and pid management"
 logging
 system_pids
 fix_permissions
 log "Done"
-log "Checking if Database exists or fresh install"
-if ! mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -e "use zabbix;"; then
+log "Checking if database exists or fresh install is required"
+
+# wait 120sec for DB
+retry=24
+until mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -e "use ${ZS_DBName};" &>/dev/null
+do
+  log "Waiting for database, it's still not available"
+  retry=`expr $retry - 1`
+  if [ $retry -eq 0 ]; then
+    exit 1
+  fi
+  sleep 5
+done
+
+if ! mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -e "use ${ZS_DBName};"; then
   warning "Zabbix DB doesn't exists. Installing and importing default settings"
   log `create_db`
   log "Database and user created. Importing Default SQL"
   log `import_zabbix_db`
   log "Import Finished. Starting"
-else 
+else
   log "Zabbix DB Exists. Starting server."
 fi
-# TODO wait for zabbix-server start
+# TODO wait for zabbix-server start with API actions
 #python /config/pyzabbix.py 2>/dev/null
 zabbix_agentd -c /usr/local/etc/zabbix_agentd.conf
-
