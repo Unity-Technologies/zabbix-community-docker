@@ -14,7 +14,7 @@ IPv6, Jabber) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP. Image
  requires external MySQL/MariaDB database (you can run MySQL/MariaDB also as 
  Docker container).
 
-#### Standard Dockerized Zabbix server usage 
+#### Standard Dockerized Zabbix server deployement 
 
 ```
 # create /var/lib/mysql as persistent volume storage 
@@ -31,9 +31,6 @@ docker run \
     --env="MARIADB_PASS=my_password" \
     zabbix/zabbix-db-mariadb
     
-# wait 60 seconds for DB initialization    
-sleep 60
-
 # start Zabbix server linked to started DB    
 docker run \
     -d \
@@ -45,13 +42,14 @@ docker run \
     --env="ZS_DBUser=zabbix" \
     --env="ZS_DBPassword=my_password" \
     zabbix/zabbix-server-2.4    
-# wait 60 seconds for Zabbix server initialization
+# wait ~60 seconds for Zabbix server initialization
 # Zabbix web will be available on the port 80, Zabbix server on the port 10051
 
-# COnfiguration backup of Zabbix
+# Configuration backup of Zabbix
 docker exec \
     -ti zabbix-db \
     /zabbix-backup/zabbix-mariadb-dump -u zabbix -p my_password -o /backups
+    
 # Full backup of Zabbix
 docker exec \
     -ti zabbix-db \
@@ -204,7 +202,7 @@ Use docker command to see if all required containers are up and running:
 ```
 $ docker ps
 ```
-Check online logs of Zabbix container:
+Check logs of Zabbix server container:
 ```
 $ docker logs zabbix-server
 ```
